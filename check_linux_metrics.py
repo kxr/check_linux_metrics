@@ -1,11 +1,10 @@
 #!/usr/bin/env python
 
 # File: check_linux_stat.py
+# URL: https://github.com/kxr/check_linux_metrics
 # Author: Khizer Naeem 
 # Email: khizernaeem@gmail.com
-# Release Date: 20/05/2015
-# Rev. Date:
-# Rev. Date:
+# Release 0.1: 20/05/2015
 # 
 #
 #  Copyright (c) 2015 Khizer Naeem (http://kxr.me)
@@ -23,42 +22,6 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-# A monitoring plugin for icinga/nagios/nsca, that reports basic system metrics of a linux host:
-# cpu, load, threads, openfiles, procs, diskio, disku, memory, swap, network
-#
-# *** Key features ***
-#
-# - Minimal dependency: Only needs basic python libraries which are installed by default on linux,
-#			all the metrics all calculated from the /proc filesystem
-#
-# - Minimal privilage:	Can be run by any non-priviliged user. Do not require root
-#
-# - No Sampling:	Important metrics like CPU, DiskIO, NetworkIO and new process forks
-#			are calculated based on the cumulative values provided by the kernel.
-#			These cumulative values are provided by the kernel since uptime,
-#			when any of these checks are called the first time, the values are copied in the
-#			interim directory. Next time whenever the plugin is called,
-#			the diffrential/interim values are reported.
-#			This ensures that there is no peak/spike missed in between the plugin calls
-# *** TODO ***
-#
-# - Improve and stanadardize argument handling
-# - Print usage instructions if wrong/bad arguments are passed
-# - Add more sanity checks for arguments
-# - Add more warning and critical thresholds
-# - Move the output printing part from each function to a single function
-# - Enable/disable perfdata
-# - Add a file age plugin?
-# - Add a Process wise memory and cpu usage reporting function?
-# - Add functionality of directly sending email (making this script usefull as a standalone monitoring)
-# - Add graphite output support?
-#
-# *** Script Structure ***
-#
-#  The Main function checks and validate arguments and call the respective independent functions check_cpu etc.
-#
-# *** Example Usage ***
-# See: README
 
 import sys
 import time
