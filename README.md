@@ -1,5 +1,5 @@
-# check_linux_metrics.py
-[check_linux_metrics.py] https://github.com/kxr/check_linux_metrics
+# check_linux_metrics
+[check_linux_metrics](https://github.com/kxr/check_linux_metrics)
 A monitoring plugin for icinga/nagios/nsca, that reports basic system metrics of a linux host: cpu, load, threads, openfiles, procs, diskio, disku, memory, swap, network
 
 ## Key features
