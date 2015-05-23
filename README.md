@@ -5,7 +5,7 @@ A monitoring plugin for icinga/nagios/nsca, that reports basic system metrics of
 
  - **Minimal dependency:** Only needs basic python libraries which are installed by default on linux, all the metrics are calculated from the /proc filesystem
 
- - **Minimal privilage:**  Can be run by any non-priviliged user. Does not require root
+ - **Minimal privilege:**  Can be run by any non-priviliged user. Does not require root
 
  - **No Sampling:** Important metrics like CPU, DiskIO, NetworkIO and new process forks are calculated based on the cumulative values provided by the kernel. These cumulative values are provided by the kernel since uptime, when any of these checks are called the first time, the values are copied in the interim directory. Next time whenever the plugin is called, the diffrential/interim values are reported. This ensures that there is no peak/spike missed in between the plugin calls.
 
