@@ -94,7 +94,7 @@ A monitoring plugin for icinga/nagios/nsca, that reports basic system metrics of
 
  - Disk IO
      `<script> diskio block_device [warn(read,write)] [critical(read,write)]`
-     note: unit is sectors/sec
+     `note: unit is sectors/sec`
         [user@localhost ~]$ ./check_linux_metrics.py diskio /dev/cciss/c0d0
         This was the first run, run again to get values: diskio(cciss/c0d0)
 
@@ -129,7 +129,7 @@ A monitoring plugin for icinga/nagios/nsca, that reports basic system metrics of
 
 - Memory
      `<script> memory [warn%] [critical%]`
-     note: used memory is calculated as: total - free - cached
+     `note: used memory is calculated as: total - free - cached`
         [user@localhost ~]$ ./check_linux_metrics.py memory
         Memory Used: 786.41MB / 11845.97MB (6.64%) | used=786.41;;;0;11845 cached=10911.13 active=7144.62
 
@@ -138,7 +138,7 @@ A monitoring plugin for icinga/nagios/nsca, that reports basic system metrics of
 
 - Swap
      `<script> cpu [warn%] [critical%]`
-     note: used cached is calculated as: total - free - cached
+     `note: used cached is calculated as: total - free - cached`
         [user@localhost ~]$ ./check_linux_metrics.py swap
         Swap Used: 0.11MB / 5992.00MB (0.00%) | used=0.11;;;0;5991 cached=0.18
 
@@ -147,7 +147,7 @@ A monitoring plugin for icinga/nagios/nsca, that reports basic system metrics of
 
 - Network
      `<script> network device [warn(rx,tx)] [critical(rx,tx)]`
-     note: unit is MB/s
+     `note: unit is MB/s`
         [user@localhost ~]$ ./check_linux_metrics.py network eth0
         This was the first run, run again to get values: net:eth0
 
