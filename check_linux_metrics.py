@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-# File: check_linux_stat.py
+# File: check_linux_metrics.py
 # URL: https://github.com/kxr/check_linux_metrics
 # Author: Khizer Naeem 
 # Email: khizernaeem@gmail.com
