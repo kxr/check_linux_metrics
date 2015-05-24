@@ -28,6 +28,7 @@ A monitoring plugin for icinga/nagios/nsca, that reports basic system metrics of
 
 ## Usage Examples
  - CPU
+
 `<script> cpu [warn%] [critical%]`
 
         [user@localhost ~]$ ./check_linux_metrics.py cpu
@@ -40,6 +41,7 @@ A monitoring plugin for icinga/nagios/nsca, that reports basic system metrics of
         CPU Usage: 9.17% [t:60.13] (OK) | cpu=9.17%;80;99 user=1.01%;80;99 system=0.55%;80;99 iowait=7.54%;80;99 nice=0.05%;80;99 irq=0.00%;80;99 softirq=0.02%;80;99 steal=0.00%;80;99
 
  - Load
+
 `<script> load [warn(load1,load5,load15)] [critical(load1,load5,load15)]`
 
         [user@localhost ~]$ ./check_linux_metrics.py load
@@ -58,6 +60,7 @@ A monitoring plugin for icinga/nagios/nsca, that reports basic system metrics of
         Load1: 0.34 Load5: 0.36 Load15: 0.36 (OK) | load1=0.34;; load5=0.36;; load15=0.36;5;10
 
  - Threads
+
 `<script> threads [warn#] [critical#]`
 
         [user@localhost ~]$ ./check_linux_metrics.py threads
@@ -67,6 +70,7 @@ A monitoring plugin for icinga/nagios/nsca, that reports basic system metrics of
         Threads: 1/207  (OK) | running=1.00;10;50 total=207.00
 
  - Open Files
+
 `<script> files [warn#] [critical#]`
 
         [user@localhost ~]$ ./check_linux_metrics.py files
@@ -76,6 +80,7 @@ A monitoring plugin for icinga/nagios/nsca, that reports basic system metrics of
         Open Files: 1344 (free: 0) (OK) | open=1344.00;5000;50000;0;1202794 free=0.00
 
  - Processes
+
 `<script> procs [warn#(total,running,waiting)] [critical#(total,running,waiting)]`
 
         [user@localhost ~]$ ./check_linux_metrics.py procs
@@ -97,7 +102,9 @@ A monitoring plugin for icinga/nagios/nsca, that reports basic system metrics of
         Total:149 Running:1 Sleeping:148 Waiting:0 Zombie:0 Others:0 New_Forks:4.52/s (OK) | total=149.00;; forks=4.52 sleeping=148.00 running=1.00;16;32 waiting=0.00;; zombie=0.00 others=0.00
 
  - Disk IO
+
 `<script> diskio block_device [warn(read,write)] [critical(read,write)]`
+
 `note: unit is sectors/sec`
 
         [user@localhost ~]$ ./check_linux_metrics.py diskio /dev/cciss/c0d0
@@ -119,6 +126,7 @@ A monitoring plugin for icinga/nagios/nsca, that reports basic system metrics of
         /dev/VolGroup/lv_root(dm-0) Read: 0.00 sec/s (0.00 t/s) Write: 1074.80 sec/s (134.35 t/s) [t:60.04] | read_operations=0.00 read_sectors=0.00 read_time=0.00 write_operations=134.35 write_sectors=1074.80 write_time=34072.15
 
  - Disk Usage
+
 `<script> disku [warn%] [critical%]`
 
         [user@localhost ~]$ ./check_linux_metrics.py disku /
@@ -134,7 +142,9 @@ A monitoring plugin for icinga/nagios/nsca, that reports basic system metrics of
         Plugin Error: Mount point not valid: (/var)
 
  - Memory
+
 `<script> memory [warn%] [critical%]`
+
 `note: used memory is calculated as: total - free - cached`
 
         [user@localhost ~]$ ./check_linux_metrics.py memory
@@ -144,7 +154,9 @@ A monitoring plugin for icinga/nagios/nsca, that reports basic system metrics of
         Memory Used: 786.90MB / 11845.97MB (6.64%) (OK) | used=786.90;8884;10661;0;11845 cached=10911.13 active=7144.82
 
  - Swap
+
 `<script> cpu [warn%] [critical%]`
+
 `note: used cached is calculated as: total - free - cached`
 
         [user@localhost ~]$ ./check_linux_metrics.py swap
@@ -154,7 +166,9 @@ A monitoring plugin for icinga/nagios/nsca, that reports basic system metrics of
         Swap Used: 0.11MB / 5992.00MB (0.00%) (OK) | used=0.11;4493;5392;0;5991 cached=0.18
 
  - Network
+
 `<script> network device [warn(rx,tx)] [critical(rx,tx)]`
+
 `note: unit is MB/s`
 
         [user@localhost ~]$ ./check_linux_metrics.py network eth0
