@@ -133,7 +133,7 @@ A monitoring plugin for icinga/nagios/nsca, that reports basic system metrics of
         [user@localhost ~]$ ./check_linux_metrics.py disku /var 75 90
         Plugin Error: Mount point not valid: (/var)
 
-- Memory
+ - Memory
 `<script> memory [warn%] [critical%]`
 `note: used memory is calculated as: total - free - cached`
 
@@ -143,7 +143,7 @@ A monitoring plugin for icinga/nagios/nsca, that reports basic system metrics of
         [user@localhost ~]$ ./check_linux_metrics.py memory 75 90
         Memory Used: 786.90MB / 11845.97MB (6.64%) (OK) | used=786.90;8884;10661;0;11845 cached=10911.13 active=7144.82
 
-- Swap
+ - Swap
 `<script> cpu [warn%] [critical%]`
 `note: used cached is calculated as: total - free - cached`
 
@@ -153,7 +153,7 @@ A monitoring plugin for icinga/nagios/nsca, that reports basic system metrics of
         [user@localhost ~]$ ./check_linux_metrics.py swap 75 90
         Swap Used: 0.11MB / 5992.00MB (0.00%) (OK) | used=0.11;4493;5392;0;5991 cached=0.18
 
-- Network
+ - Network
 `<script> network device [warn(rx,tx)] [critical(rx,tx)]`
 `note: unit is MB/s`
 
