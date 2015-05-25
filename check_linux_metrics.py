@@ -857,4 +857,5 @@ if __name__ == '__main__':
 				exit( 3 )
 		else:
 			print ( 'What?' )
+			exit( 3 )
 		
