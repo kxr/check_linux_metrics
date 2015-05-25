@@ -746,6 +746,7 @@ if __name__ == '__main__':
 					exit( 3 )
 			else:
 				print ( 'Plugin Error: Invalide arguments for '+sys.argv[1]+': ('+str(sys.argv)+')' )
+				exit( 3 )
 				
 		# Open files
 		elif sys.argv[1] == 'files':
@@ -761,6 +762,7 @@ if __name__ == '__main__':
 					exit( 3 )
 			else:
 				print ( 'Plugin Error: Invalide arguments for '+sys.argv[1]+': ('+str(sys.argv)+')' )
+				exit( 3 )
 		# diskio dev warn(read,write) crit(read,write)
 		elif sys.argv[1] == 'diskio':
 			# no arg passed after diskio [dev]
@@ -783,6 +785,7 @@ if __name__ == '__main__':
 					check_diskio( sys.argv[2], warn=warn_arr, crit=crit_arr )
 			else:
 				print ( 'Plugin Error: Invalide arguments for '+sys.argv[1]+': ('+str(sys.argv)+')' )
+				exit( 3 )
 		# disku mount warn crit
 		elif sys.argv[1] == 'disku':
 			# no arg passed after disku mount
@@ -797,6 +800,7 @@ if __name__ == '__main__':
 					exit( 3 )
 			else:
 				print ( 'Plugin Error: Invalide arguments for '+sys.argv[1]+': ('+str(sys.argv)+')' )
+				exit( 3 )
 		# memory warn crit
 		elif sys.argv[1] == 'memory':
 			# no arg passed after memory
@@ -811,6 +815,7 @@ if __name__ == '__main__':
 					exit( 3 )
 			else:
 				print ( 'Plugin Error: Invalide arguments for '+sys.argv[1]+': ('+str(sys.argv)+')' )
+				exit( 3 )
 		# swap warn crit
 		elif sys.argv[1] == 'swap':
 			# no arg passed after swap
@@ -825,6 +830,7 @@ if __name__ == '__main__':
 					exit( 3 )
 			else:
 				print ( 'Plugin Error: Invalide arguments for '+sys.argv[1]+': ('+str(sys.argv)+')' )
+				exit( 3 )
 	
 		# network iface warn(rx,tx)  crit(rx,tx)
 		elif sys.argv[1] == 'network':
@@ -848,6 +854,7 @@ if __name__ == '__main__':
 					check_net( sys.argv[2], warn=warn_arr, crit=crit_arr )
 			else:
 				print ( 'Plugin Error: Invalide arguments for '+sys.argv[1]+': ('+str(sys.argv)+')' )
+				exit( 3 )
 		else:
 			print ( 'What?' )
 		
