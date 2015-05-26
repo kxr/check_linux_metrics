@@ -263,12 +263,14 @@ def check_procs( warn=None, crit=None ):
 	for proc_dir in os.listdir( '/proc' ):
 		if proc_dir.isdigit():
 			p_total += 1
-			with open( '/proc/' + proc_dir + '/stat' ) as f:
-				line = f.readline().split()[1:3]
-				# ['(httpd)', 'S']
-				if line[1] not in states_procs:
-					states_procs[ line[1] ] = []
-				states_procs[ line[1] ].append( line[0] )
+			try:
+				with open( '/proc/' + proc_dir + '/stat' ) as f:
+					line = f.readline().split()[1:3]
+			except:
+				continue
+			if line[1] not in states_procs:
+				states_procs[ line[1] ] = []
+			states_procs[ line[1] ].append( line[0] )
 	p = {
 	'total': p_total,
 	'forks': forks_ps,
