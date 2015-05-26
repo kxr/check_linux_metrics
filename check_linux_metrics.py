@@ -123,16 +123,17 @@ def check_load( warn=None, crit=None ):
 	status_outp += 'Load15: ' + format( load['load15'], '.2f' )
 
 	if warn is not None and crit is not None:
+		status_code = 0
 		for i in range( len( warn ) ):
 			if crit[i] !='' and warn[i] !='':
 				if float( load_avgs[i] ) >= float( crit[i] ):
 					status_code = 2
 					status_outp += ' (Critical)'
 				elif float( load_avgs[i] ) >= float(warn[i] ):
-					status_code = 1
+					if status_code < 1:
+						status_code = 1
 					status_outp += ' (Warning)'
 				else:
-					status_code = 0
 					status_outp += ' (OK)'
 	else:
 		status_code = 0
@@ -297,6 +298,7 @@ def check_procs( warn=None, crit=None ):
 
 
 	if warn is not None and crit is not None:
+		status_code = 0
 		param = [ 'total', 'running', 'waiting' ]
 		for i in range( len( warn ) ):
 			if crit[i] != '' and warn[i] != '':
@@ -304,10 +306,10 @@ def check_procs( warn=None, crit=None ):
 					status_code = 2
 					status_outp += ' (Critical ' + param[i] + ')'
 				elif float( p[ param[i] ] ) >= float(warn[i] ):
-					status_code = 1
+					if ( status_code < 1 ):
+						status_code = 1
 					status_outp += ' (Warning ' + param[i] + ')'
 				else:
-					status_code = 0
 					status_outp += ' (OK)'
 	else:
 		status_code = 0
@@ -580,7 +582,7 @@ def check_swap ( warn=None, crit=None ):
 	exit ( status_code )
 
 def check_net ( interface, warn=None, crit=None ):
-	status_code = 3
+	status_code = 0
 	status_outp =''
 	perfdata = ''
 
@@ -643,10 +645,10 @@ def check_net ( interface, warn=None, crit=None ):
 				status_code = 2
 				status_outp += ' (Critical BW)'
 			elif float( int_d['RX_MBps'] ) >= float( warn[0] ) or float( int_d['TX_MBps'] ) >= float( warn[1] ):
-				status_code = 1
+				if status_code < 1:
+					status_code = 1
 				status_outp += ' (Warning BW)'
 			else:
-				status_code = 0
 				status_outp += ' (OK)'
 		else:
 			status_code = 0
