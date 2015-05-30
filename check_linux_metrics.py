@@ -650,8 +650,6 @@ def check_net ( interface, warn=None, crit=None ):
 				status_outp += ' (Warning BW)'
 			else:
 				status_outp += ' (OK)'
-		else:
-			status_code = 0
 
 		for x in [ 'RX_MBps', 'RX_PKps', 'TX_MBps', 'TX_PKps', 'PK_ERRORS']:
 			perfdata += x + '=' + format( int_d[x], '.2f' ) 
