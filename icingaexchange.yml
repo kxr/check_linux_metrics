@@ -13,4 +13,5 @@ releases:
       - 
         name: check_linux_metrics.py
         url: "file:///check_linux_metrics.py"
+        description: "Python standalone executeable script"
         checksum: 6a07493046bb68f41254d93495aae9ce
