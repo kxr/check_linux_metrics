@@ -8,11 +8,9 @@ type: Plugin
 license: gplv3
 releases: 
   - 
-    name: 0.1
-    description: "First release"
+    name: 0.2
     files: 
       - 
         name: check_linux_metrics.py
         url: "file:///check_linux_metrics.py"
-        description: "First release"
-        checksum: 56c5cb495833cece7a431661f8844257
+        checksum: 6a07493046bb68f41254d93495aae9ce
