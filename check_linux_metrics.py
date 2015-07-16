@@ -50,10 +50,18 @@ def check_cpu( warn=None, crit=None ):
 	sample_period = float( time.time() - os.path.getmtime( interim_file ) )
 
 	# Get the deltas proc stats: interimfile - procfile(now)	
-	with open( interim_file ) as f1:
+	#with open( interim_file ) as f1:
+	f1 = open( interim_file, 'r' )
+	try:
 		line1 = f1.readline()
-	with open( '/proc/stat' ) as f2:
+	finally:
+		f1.close()
+	#with open( '/proc/stat' ) as f2:
+	f2 = open( '/proc/stat', 'r' )
+	try:
 		line2 = f2.readline()
+	finally:
+		f2.close()
 	deltas = [int(b) - int(a) for a, b in zip(line1.split()[1:], line2.split()[1:])]
 	total = sum( deltas )
 	percents = [100 - (100 * (float(total - x) / total)) for x in deltas]
@@ -109,8 +117,12 @@ def check_load( warn=None, crit=None ):
 	status_outp =''
 	perfdata = ''
 
-	with open('/proc/loadavg') as f:
+	#with open('/proc/loadavg') as f:
+	f = open('/proc/loadavg', 'r')
+	try:
 		line = f.readline()
+	finally:
+		f.close()
 	load_avgs = [float(x) for x in line.split()[:3]]
 
 	load = {
@@ -158,8 +170,12 @@ def check_threads( warn=None, crit=None ):
 	status_outp =''
 	perfdata = ''
 
-	with open('/proc/loadavg') as f:
+	#with open('/proc/loadavg') as f:
+	f = open('/proc/loadavg', 'r')
+	try:
 		line = f.readline()
+	finally:
+		f.close()
 	t = line.split()[3]
 	threads = {
 	'running': t.split('/')[0],
@@ -197,8 +213,12 @@ def check_openfiles( warn=None, crit=None ):
 	status_outp = ''
 	perfdata = ''
 
-	with open('/proc/sys/fs/file-nr') as f:
+	#with open('/proc/sys/fs/file-nr') as f:
+	f = open('/proc/sys/fs/file-nr', 'r')
+	try:
 		line = f.readline()
+	finally:
+		f.close()
 	fd = [int(x) for x in line.split()]
 
 	ofiles = {
@@ -252,13 +272,17 @@ def check_procs( warn=None, crit=None ):
 	# Get the deltas proc stats interimfile - procfile(now)	
 	curr_forks = 0
 	for file in [ '/proc/stat', interim_file ]:
-		with open( file ) as f:
+		#with open( file ) as f:
+		f = open( file, 'r' )
+		try:
 			for line in f:
 				if line.startswith( 'processes ' ):
 					if file == '/proc/stat':
 						curr_forks = int( line.split()[1] )
 					elif file == interim_file:
 						forks = curr_forks - int( line.split()[1] )	
+		finally:
+			f.clsee()
 	forks_ps = float ( forks / sample_period )
 	states_procs = {}
 	p_total = 0
@@ -266,8 +290,12 @@ def check_procs( warn=None, crit=None ):
 		if proc_dir.isdigit():
 			p_total += 1
 			try:
-				with open( '/proc/' + proc_dir + '/stat' ) as f:
+				#with open( '/proc/' + proc_dir + '/stat' ) as f:
+				f = open( '/proc/' + proc_dir + '/stat', 'r' )
+				try:
 					line = f.readline().split()[1:3]
+				finally:
+					f.close()
 			except:
 				continue
 			if line[1] not in states_procs:
@@ -351,8 +379,12 @@ def check_diskio( dev, warn=None, crit=None ):
 	else:
 		device = dev
 	#Check if the device exist
-	with open( '/proc/diskstats' ) as f2:
+	#with open( '/proc/diskstats' ) as f2:
+	f2 = open( '/proc/diskstats', 'r' )
+	try:
 		proc_content = f2.read()
+	finally:
+		f2.close()
 	sep = '%s ' % device
 	found = False
 	for line in proc_content.splitlines():
@@ -375,8 +407,12 @@ def check_diskio( dev, warn=None, crit=None ):
 		# Get mtime of the interim file and calculate the sample period
 		sample_period = float( time.time() - os.path.getmtime( interim_file ) )
 
-		with open( interim_file ) as f1:
+		#with open( interim_file ) as f1:
+		f1 = open( interim_file, 'r' )
+		try:
 			interim_content = f1.read()
+		finally:
+			f1.close()
 
 		for line in interim_content.splitlines():
 			if sep in line:
@@ -480,7 +516,9 @@ def check_memory ( warn=None, crit=None ):
 	status_outp =''
 	perfdata = ''
 	mem = {}
-	with open('/proc/meminfo') as f:
+	#with open('/proc/meminfo') as f:
+	f = open('/proc/meminfo', 'r')
+	try:
 		for line in f:
 			if line.startswith( 'MemTotal: ' ):
 				mem['total'] = int( line.split()[1] )
@@ -492,6 +530,8 @@ def check_memory ( warn=None, crit=None ):
 				mem['cached'] = int( line.split()[1] )
 			elif line.startswith('Buffers: ' ):
 				mem['buffers'] = int( line.split()[1] )
+	finally:
+		f.close()
 	m = {
 	'total':   float( mem['total'] / 1024.00 ),
 	'active':  float( mem['active'] / 1024.00 ),
@@ -536,7 +576,9 @@ def check_swap ( warn=None, crit=None ):
 	status_outp =''
 	perfdata = ''
 	swap = {}
-	with open('/proc/meminfo') as f:
+	#with open('/proc/meminfo') as f:
+	f = open('/proc/meminfo', 'r')
+	try:
 		for line in f:
 			if line.startswith('SwapTotal: ' ):
 				swap['total'] = int( line.split()[1] )
@@ -544,6 +586,8 @@ def check_swap ( warn=None, crit=None ):
 				swap['free'] = int( line.split()[1] )
 			elif line.startswith('SwapCached: ' ):
 				swap['cached'] = int( line.split()[1] )
+	finally:
+		f.close()
 	s = {
 	'total':   float( swap['total'] / 1024.00 ),
 	'cached':  float( swap['cached'] / 1024.00 ),
@@ -601,7 +645,9 @@ def check_net ( interface, warn=None, crit=None ):
 	int_t = {}
 	int_d = {}
 	for file in ['/proc/net/dev', interim_file]:
-		with open( file ) as f:
+		#with open( file ) as f:
+		f = open( file, 'r' )
+		try:
 			for line in f:
 				line = line.strip()
 				if line.startswith( interface+':' ):
@@ -617,6 +663,8 @@ def check_net ( interface, warn=None, crit=None ):
 							int_d[x] = int_t[x] - interim_value
 						seq += 1
 					break
+		finally:
+			f.close()
 	if not int_t or not int_d:
 		#interface not found
 		print ( 'Plugin Error: Network device not found: ('+interface+')' )
