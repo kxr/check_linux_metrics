@@ -84,7 +84,8 @@ def check_cpu( warn=None, crit=None ):
 		cpu_pcts['steal'] = 0
 	cpu_pcts['cpu'] = 100 - cpu_pcts['idle']
 	
-	status_outp = 'CPU Usage: ' + format( cpu_pcts['cpu'], '.2f' ) + '%' + ' [t:' + format( sample_period, '.2f' ) + ']'
+	#status_outp = 'CPU Usage: ' + format( cpu_pcts['cpu'], '.2f' ) + '%' + ' [t:' + format( sample_period, '.2f' ) + ']'
+	status_outp = 'CPU Usage: ' + str( '%.2f' % cpu_pcts['cpu'] ) + '%' + ' [t:' + str( '%.2f' % sample_period ) + ']'
 
 	if warn is not None and crit is not None:
 		if float( cpu_pcts['cpu'] ) >= float( crit ):
@@ -100,7 +101,8 @@ def check_cpu( warn=None, crit=None ):
 		status_code = 0
 
 	for x in [ 'cpu', 'user', 'system', 'iowait', 'nice', 'irq', 'softirq', 'steal'  ]:
-		perfdata += x + '=' + format( cpu_pcts[x], '.2f' ) + '%' 
+		#perfdata += x + '=' + format( cpu_pcts[x], '.2f' ) + '%' 
+		perfdata += x + '=' + str( '%.2f' % cpu_pcts[x] ) + '%' 
 		if warn is not None and crit is not None:
 			perfdata += ';' + str(warn) + ';' + str(crit)
 		perfdata += ' '
@@ -132,9 +134,12 @@ def check_load( warn=None, crit=None ):
 	'load15':  load_avgs[2]
 	}
 
-	status_outp =  'Load1: ' + format( load['load1'], '.2f' ) + ' '
-	status_outp += 'Load5: ' + format( load['load5'], '.2f' ) + ' '
-	status_outp += 'Load15: ' + format( load['load15'], '.2f' )
+	#status_outp =  'Load1: ' + format( load['load1'], '.2f' ) + ' '
+	#status_outp += 'Load5: ' + format( load['load5'], '.2f' ) + ' '
+	#status_outp += 'Load15: ' + format( load['load15'], '.2f' )
+	status_outp =  'Load1: ' + str( '%.2f' % load['load1'] ) + ' '
+	status_outp += 'Load5: ' + str( '%.2f' % load['load5'] ) + ' '
+	status_outp += 'Load15: ' + str( '%.2f' % load['load15'] )
 
 	if warn is not None and crit is not None:
 		status_code = 0
@@ -154,7 +159,8 @@ def check_load( warn=None, crit=None ):
 
 	seq=0
 	for x in [ 'load1', 'load5', 'load15' ]:
-		perfdata += x + '=' + format( load[x], '.2f' )
+		#perfdata += x + '=' + format( load[x], '.2f' )
+		perfdata += x + '=' + str( '%.2f' % load[x] )
 		if warn is not None and crit is not None:
 			if len( warn ) >= seq+1:
 				perfdata += ';' + str(warn[seq]) + ';' + str(crit[seq])
@@ -199,7 +205,8 @@ def check_threads( warn=None, crit=None ):
 		status_code = 0
 
 	for x in [ 'running', 'total'  ]:
-		perfdata += x + '=' + format( float( threads[x] ), '.2f' )
+		#perfdata += x + '=' + format( float( threads[x] ), '.2f' )
+		perfdata += x + '=' + str( '%.2f' % float( threads[x] ) )
 		if warn is not None and crit is not None and x == 'running':
 			perfdata += ';' + str(warn) + ';' + str(crit)
 		perfdata += ' '
@@ -244,7 +251,8 @@ def check_openfiles( warn=None, crit=None ):
 		status_code = 0
 
 	for x in [ 'open', 'free' ]:
-		perfdata += x + '=' + format( float( ofiles[x] ), '.2f' )
+		#perfdata += x + '=' + format( float( ofiles[x] ), '.2f' )
+		perfdata += x + '=' + str( '%.2f' % float( ofiles[x] ) )
 		if warn is not None and crit is not None and x == 'open':
 			perfdata += ';' + str(warn) + ';' + str(crit)
 			perfdata += ';0;' + str( ofiles['total'] )
@@ -324,7 +332,8 @@ def check_procs( warn=None, crit=None ):
 			p['others'] += len( states_procs[state] )
 
 	status_outp += 'Total:' + str( p['total'] ) + ' Running:' + str( p['running'] ) + ' Sleeping:' + str( p['sleeping'] ) + ' Waiting:' + str( p['waiting'] )
-	status_outp += ' Zombie:' + str( p['zombie'] ) + ' Others:' + str( p['others'] ) + ' New_Forks:' + format( p['forks'], '.2f' ) + '/s'
+	#status_outp += ' Zombie:' + str( p['zombie'] ) + ' Others:' + str( p['others'] ) + ' New_Forks:' + format( p['forks'], '.2f' ) + '/s'
+	status_outp += ' Zombie:' + str( p['zombie'] ) + ' Others:' + str( p['others'] ) + ' New_Forks:' + str( '%.2f' % p['forks'] ) + '/s'
 
 
 	if warn is not None and crit is not None:
@@ -347,7 +356,8 @@ def check_procs( warn=None, crit=None ):
 
 	seq=0
 	for x in [ 'total', 'forks', 'sleeping', 'running', 'waiting', 'zombie', 'others' ]:
-		perfdata += x + '=' + format( p[x], '.2f' )
+		#perfdata += x + '=' + format( p[x], '.2f' )
+		perfdata += x + '=' + str( '%.2f' % p[x] )
 		if warn is not None and crit is not None:
 			if x in [ 'total', 'running', 'waiting' ]:
 				if len( warn ) >= seq+1:
@@ -433,9 +443,12 @@ def check_diskio( dev, warn=None, crit=None ):
 
 		status_outp += dev
 		status_outp += '(' + device + ')'
-		status_outp += ' Read: ' + format( d['read_sectors'], '.2f' ) + ' sec/s (' + format( d['read_operations'], '.2f' ) + ' t/s)'
-		status_outp += ' Write: ' + format( d['write_sectors'], '.2f' ) + ' sec/s (' + format( d['write_operations'], '.2f' ) + ' t/s)'
-		status_outp += ' [t:' + format( sample_period, '.2f' ) + ']'
+		#status_outp += ' Read: ' + format( d['read_sectors'], '.2f' ) + ' sec/s (' + format( d['read_operations'], '.2f' ) + ' t/s)'
+		#status_outp += ' Write: ' + format( d['write_sectors'], '.2f' ) + ' sec/s (' + format( d['write_operations'], '.2f' ) + ' t/s)'
+		#status_outp += ' [t:' + format( sample_period, '.2f' ) + ']'
+		status_outp += ' Read: ' + str( '%.2f' % d['read_sectors'] ) + ' sec/s (' + str( '%.2f' % d['read_operations'] ) + ' t/s)'
+		status_outp += ' Write: ' + str( '%.2f' % d['write_sectors'] ) + ' sec/s (' + str( '%.2f' % d['write_operations'] ) + ' t/s)'
+		status_outp += ' [t:' + str( '%.2f' % sample_period ) + ']'
 
 		if warn is not None and crit is not None:
 			if float( d['read_sectors'] ) >= float( crit[0] ) or float( d['write_sectors'] ) >= float( crit[1] ):
@@ -451,7 +464,8 @@ def check_diskio( dev, warn=None, crit=None ):
 			status_code = 0
 	
 		for x in [ 'read_operations', 'read_sectors', 'read_time', 'write_operations', 'write_sectors', 'write_time' ]:
-			perfdata += x + '=' + format( d[x], '.2f' ) 
+			#perfdata += x + '=' + format( d[x], '.2f' ) 
+			perfdata += x + '=' + str( '%.2f' % d[x] ) 
 			if warn is not None and crit is not None:
 				if x == 'read_sectors':
 					perfdata += ';' + str(warn[0]) + ';' + str(crit[0])
@@ -489,8 +503,10 @@ def check_disku( mount, warn=None, crit=None):
 		du['used_pc'] = ( du['size'] - du['avail'] ) / du['size'] * 100
 
 		status_outp += mount
-		status_outp += ' Used: ' + format( du['size'] - du['avail'], '.2f' ) + ' GB / ' + format( du['size'], '.2f' ) + ' GB'
-		status_outp += ' (' + format( du['used_pc'], '.2f' ) + '%)'
+		#status_outp += ' Used: ' + format( du['size'] - du['avail'], '.2f' ) + ' GB / ' + format( du['size'], '.2f' ) + ' GB'
+		#status_outp += ' (' + format( du['used_pc'], '.2f' ) + '%)'
+		status_outp += ' Used: ' + str( '%.2f' % du['size'] - du['avail'] ) + ' GB / ' + str( '%.2f' % du['size'] ) + ' GB'
+		status_outp += ' (' + str( '%.2f' % du['used_pc'] ) + '%)'
 
 		if warn is not None and crit is not None:
 			if du['used_pc'] >= float( crit ):
@@ -505,7 +521,8 @@ def check_disku( mount, warn=None, crit=None):
 		else:
 			status_code = 0
 	
-		perfdata += 'used=' + format( du['used_pc'], '.2f' ) + '%'
+		#perfdata += 'used=' + format( du['used_pc'], '.2f' ) + '%'
+		perfdata += 'used=' + str( '%.2f' % du['used_pc'] ) + '%'
 		if warn is not None and crit is not None:
 			perfdata += ';' + str(warn) + ';' + str(crit)
 	
@@ -541,7 +558,8 @@ def check_memory ( warn=None, crit=None ):
 	'used_p': float( (mem['total'] - mem['free'] - mem['cached'] - mem['buffers']) ) / float( mem['total'] ) * 100.00
 	}
 
-	status_outp += 'Memory Used: ' + format( m['used'], '.2f' ) + 'MB / ' + format( m['total'], '.2f' ) + 'MB (' + format( m['used_p'], '.2f' ) + '%)'
+	#status_outp += 'Memory Used: ' + format( m['used'], '.2f' ) + 'MB / ' + format( m['total'], '.2f' ) + 'MB (' + format( m['used_p'], '.2f' ) + '%)'
+	status_outp += 'Memory Used: ' + str( '%.2f' % m['used'] ) + 'MB / ' + str( '%.2f' % m['total'] ) + 'MB (' + str( '%.2f' % m['used_p'] ) + '%)'
 
 	if warn is not None and crit is not None:
 		if m['used_p'] >= float( crit ):
@@ -557,7 +575,8 @@ def check_memory ( warn=None, crit=None ):
 		status_code = 0
 
 	for x in [ 'used', 'cached', 'active' ]:
-		perfdata += x + '=' + format( m[x], '.2f' )
+		#perfdata += x + '=' + format( m[x], '.2f' )
+		perfdata += x + '=' + str( '%.2f' % m[x] )
 		if x == 'used':
 			if warn is not None and crit is not None:
 				warn_mb = int( m['total'] * float( warn ) / 100 )
@@ -596,7 +615,8 @@ def check_swap ( warn=None, crit=None ):
 	'used_p':  float( swap['total'] - swap['free'] - swap['cached'] ) / swap['total'] * 100.00
 	}
 
-	status_outp += 'Swap Used: ' + format( s['used'], '.2f' ) + 'MB / ' + format( s['total'], '.2f' ) + 'MB (' + format( s['used_p'], '.2f' ) + '%)'
+	#status_outp += 'Swap Used: ' + format( s['used'], '.2f' ) + 'MB / ' + format( s['total'], '.2f' ) + 'MB (' + format( s['used_p'], '.2f' ) + '%)'
+	status_outp += 'Swap Used: ' + str( '%.2f' % s['used'] ) + 'MB / ' + str( '%.2f' % s['total'] ) + 'MB (' + str( '%.2f' % s['used_p'] ) + '%)'
 
 	if warn is not None and crit is not None:
 		if s['used_p'] >= float( crit ):
@@ -611,7 +631,8 @@ def check_swap ( warn=None, crit=None ):
 	else:
 		status_code = 0
 	for x in [ 'used', 'cached' ]:
-		perfdata += x + '=' + format( s[x], '.2f' )
+		#perfdata += x + '=' + format( s[x], '.2f' )
+		perfdata += x + '=' + str( '%.2f' % s[x] )
 		if x == 'used':
 			if warn is not None and crit is not None:
 				warn_mb = int( s['total'] * float( warn ) / 100 )
@@ -677,9 +698,12 @@ def check_net ( interface, warn=None, crit=None ):
 		int_d['TX_PKps'] = float( int_d['t_packets'] / sample_period )
 
 		status_outp += interface
-		status_outp += ' Rx: ' + format( int_d['RX_MBps'], '.2f' ) + ' MB/s (' + format( int_d['RX_PKps'], '.2f' ) + ' p/s)'
-		status_outp += ' Tx: ' + format( int_d['TX_MBps'], '.2f' ) + ' MB/s (' + format( int_d['TX_PKps'], '.2f' ) + ' p/s)'
-		status_outp += ' [t:' + format( sample_period, '.2f' ) + ']'
+		#status_outp += ' Rx: ' + format( int_d['RX_MBps'], '.2f' ) + ' MB/s (' + format( int_d['RX_PKps'], '.2f' ) + ' p/s)'
+		#status_outp += ' Tx: ' + format( int_d['TX_MBps'], '.2f' ) + ' MB/s (' + format( int_d['TX_PKps'], '.2f' ) + ' p/s)'
+		#status_outp += ' [t:' + format( sample_period, '.2f' ) + ']'
+		status_outp += ' Rx: ' + str( '%.2f' % int_d['RX_MBps'] ) + ' MB/s (' + str( '%.2f' % int_d['RX_PKps'] ) + ' p/s)'
+		status_outp += ' Tx: ' + str( '%.2f' % int_d['TX_MBps'] ) + ' MB/s (' + str( '%.2f' % int_d['TX_PKps'] ) + ' p/s)'
+		status_outp += ' [t:' + str( '%.2f' % sample_period ) + ']'
 
 		# Check packet errors
 		int_d['PK_ERRORS'] = 0
@@ -702,7 +726,8 @@ def check_net ( interface, warn=None, crit=None ):
 				status_outp += ' (OK)'
 
 		for x in [ 'RX_MBps', 'RX_PKps', 'TX_MBps', 'TX_PKps', 'PK_ERRORS']:
-			perfdata += x + '=' + format( int_d[x], '.2f' ) 
+			#perfdata += x + '=' + format( int_d[x], '.2f' ) 
+			perfdata += x + '=' + str( '%.2f' % int_d[x] ) 
 			if warn is not None and crit is not None :
 				if x == 'RX_MBps':
 					perfdata += ';' + str(warn[0]) + ';' + str(crit[0])
