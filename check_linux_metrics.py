@@ -283,7 +283,7 @@ def check_procs( warn=None, crit=None ):
 					elif file == interim_file:
 						forks = curr_forks - int( line.split()[1] )	
 		finally:
-			f.clsee()
+			f.close()
 	forks_ps = float ( forks / sample_period )
 	states_procs = {}
 	p_total = 0
