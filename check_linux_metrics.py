@@ -6,6 +6,7 @@
 # Email: khizernaeem@gmail.com
 # Release 0.1: 20/05/2015
 # Release 0.2: 02/06/2015
+# Release 0.3: 16/07/2015
 # 
 #
 #  Copyright (c) 2015 Khizer Naeem (http://kxr.me)
