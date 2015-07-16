@@ -505,7 +505,7 @@ def check_disku( mount, warn=None, crit=None):
 		status_outp += mount
 		#status_outp += ' Used: ' + format( du['size'] - du['avail'], '.2f' ) + ' GB / ' + format( du['size'], '.2f' ) + ' GB'
 		#status_outp += ' (' + format( du['used_pc'], '.2f' ) + '%)'
-		status_outp += ' Used: ' + str( '%.2f' % du['size'] - du['avail'] ) + ' GB / ' + str( '%.2f' % du['size'] ) + ' GB'
+		status_outp += ' Used: ' + str( '%.2f' % float( du['size'] - du['avail'] ) ) + ' GB / ' + str( '%.2f' % du['size'] ) + ' GB'
 		status_outp += ' (' + str( '%.2f' % du['used_pc'] ) + '%)'
 
 		if warn is not None and crit is not None:
