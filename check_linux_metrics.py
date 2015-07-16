@@ -45,7 +45,7 @@ def check_cpu( warn=None, crit=None ):
 	if not os.path.isfile( interim_file ):
 		shutil.copyfile( '/proc/stat', interim_file )
 		print ( 'This was the first run, run again to get values' )
-		exit( 0 )
+		sys.exit( 0 )
 
 	# Get mtime of the interim file and calculate the sample period
 	sample_period = float( time.time() - os.path.getmtime( interim_file ) )
@@ -113,7 +113,7 @@ def check_cpu( warn=None, crit=None ):
 	shutil.copyfile( '/proc/stat', interim_file )
 
 	print status_outp + ' | ' + perfdata
-	exit ( status_code )
+	sys.exit( status_code )
 
 def check_load( warn=None, crit=None ):
 	status_code = 3
@@ -170,7 +170,7 @@ def check_load( warn=None, crit=None ):
 	perfdata = perfdata[:-1]
 
 	print status_outp + ' | ' + perfdata
-	exit ( status_code )
+	sys.exit( status_code )
 
 def check_threads( warn=None, crit=None ):
 	status_code = 3
@@ -214,7 +214,7 @@ def check_threads( warn=None, crit=None ):
 	perfdata = perfdata[:-1]
 
 	print status_outp + ' | ' + perfdata
-	exit ( status_code )
+	sys.exit( status_code )
 
 def check_openfiles( warn=None, crit=None ):
 	status_code = 3
@@ -261,7 +261,7 @@ def check_openfiles( warn=None, crit=None ):
 	perfdata = perfdata[:-1]
 
 	print status_outp + ' | ' + perfdata
-	exit ( status_code )
+	sys.exit( status_code )
 
 
 def check_procs( warn=None, crit=None ):
@@ -275,7 +275,7 @@ def check_procs( warn=None, crit=None ):
 	if not os.path.isfile( interim_file ):
 		shutil.copyfile( '/proc/stat', interim_file )
 		print ( 'This was the first run, run again to get values' )
-		exit( 0 )
+		sys.exit( 0 )
 	# Get mtime of the interim file and calculate the sample period
 	sample_period = float( time.time() - os.path.getmtime( interim_file ) )
 	# Get the deltas proc stats interimfile - procfile(now)	
@@ -372,7 +372,7 @@ def check_procs( warn=None, crit=None ):
 	shutil.copyfile( '/proc/stat', interim_file )
 
 	print status_outp + ' | ' + perfdata
-	exit ( status_code )
+	sys.exit( status_code )
 
 def check_diskio( dev, warn=None, crit=None ):
 	status_code = 3
@@ -384,7 +384,7 @@ def check_diskio( dev, warn=None, crit=None ):
 		real_path = os.path.realpath( dev )
 		if str( real_path[:5] ) != '/dev/':
 			print ( 'Plugin Error: Block device not found: ' + real_path + '('+device+')' )
-			exit( 3 )
+			sys.exit( 3 )
 		else:
 			device = real_path [5:]
 	else:
@@ -405,7 +405,7 @@ def check_diskio( dev, warn=None, crit=None ):
 			break
 	if not found:
 		print ( 'Plugin Error: Block device not found: ('+device+')' )
-		exit( 3 )
+		sys.exit( 3 )
 	else:
 		#Now the the device is found:
 		#Verify if the interim file exists, if not create it now
@@ -413,7 +413,7 @@ def check_diskio( dev, warn=None, crit=None ):
 		if not os.path.isfile( interim_file ):
 			shutil.copyfile( '/proc/diskstats', interim_file )
 			print ( 'This was the first run, run again to get values: diskio('+device+')' )
-			exit( 0 )
+			sys.exit( 0 )
 
 		# Get mtime of the interim file and calculate the sample period
 		sample_period = float( time.time() - os.path.getmtime( interim_file ) )
@@ -479,7 +479,7 @@ def check_diskio( dev, warn=None, crit=None ):
 		shutil.copyfile( '/proc/diskstats', interim_file )
 	
 		print status_outp + ' | ' + perfdata
-		exit ( status_code )
+		sys.exit( status_code )
 
 def check_disku( mount, warn=None, crit=None):
 	status_code = 3
@@ -491,7 +491,7 @@ def check_disku( mount, warn=None, crit=None):
 		statvfs = os.statvfs( mount )
 	else:
 		print ( 'Plugin Error: Mount point not valid: (' + mount + ')' )
-		exit( 3 )
+		sys.exit( 3 )
 
 	if statvfs is not None:
 		du = {
@@ -527,7 +527,7 @@ def check_disku( mount, warn=None, crit=None):
 			perfdata += ';' + str(warn) + ';' + str(crit)
 	
 		print status_outp + ' | ' + perfdata
-		exit ( status_code )
+		sys.exit( status_code )
 
 def check_memory ( warn=None, crit=None ):
 	status_code = 3
@@ -590,7 +590,7 @@ def check_memory ( warn=None, crit=None ):
 	perfdata = perfdata[:-1]
 
 	print status_outp + ' | ' + perfdata
-	exit ( status_code )
+	sys.exit( status_code )
 def check_swap ( warn=None, crit=None ):
 	status_code = 3
 	status_outp =''
@@ -646,7 +646,7 @@ def check_swap ( warn=None, crit=None ):
 	perfdata = perfdata[:-1]
 
 	print status_outp + ' | ' + perfdata
-	exit ( status_code )
+	sys.exit( status_code )
 
 def check_net ( interface, warn=None, crit=None ):
 	status_code = 0
@@ -658,7 +658,7 @@ def check_net ( interface, warn=None, crit=None ):
 	if not os.path.isfile( interim_file ):
 		shutil.copyfile( '/proc/net/dev', interim_file )
 		print ( 'This was the first run, run again to get values: net:' + interface )
-		exit( 0 )
+		sys.exit( 0 )
 
 	# Get mtime of the interim file and calculate the sample period
 	sample_period = float ( time.time() - os.path.getmtime( interim_file ) )
@@ -690,7 +690,7 @@ def check_net ( interface, warn=None, crit=None ):
 	if not int_t or not int_d:
 		#interface not found
 		print ( 'Plugin Error: Network device not found: ('+interface+')' )
-		exit( 3 )
+		sys.exit( 3 )
 	else:
 		int_d['RX_MBps'] = float( int_d['r_bytes'] / 1024.00 / 1024.00 / sample_period )
 		int_d['TX_MBps'] = float( int_d['t_bytes'] / 1024.00 / 1024.00 / sample_period )
@@ -741,7 +741,7 @@ def check_net ( interface, warn=None, crit=None ):
 		shutil.copyfile( '/proc/net/dev', interim_file )
 
 		print status_outp + ' | ' + perfdata
-		exit ( status_code )
+		sys.exit( status_code )
 
 if __name__ == '__main__':
 
@@ -757,10 +757,10 @@ if __name__ == '__main__':
 					check_cpu( warn=sys.argv[2], crit=sys.argv[3] )
 				else:
 					print ( 'Plugin Error: Warning('+sys.argv[2]+') threshold should be less than critical('+sys.argv[3]+')' )
-					exit ( 3 )
+					sys.exit( 3 )
 			else:
 				print ( 'Plugin Error: Invalide arguments for '+sys.argv[1]+': ('+str(sys.argv)+')' )
-				exit( 3 )
+				sys.exit( 3 )
 	
 		# procs
 		elif sys.argv[1] == 'procs':
@@ -774,17 +774,17 @@ if __name__ == '__main__':
 				crit_arr = sys.argv[3].split(',')
 				if len(warn_arr) > 3 or len(warn_arr) < 1 or len(warn_arr) != len(crit_arr):
 					print ( 'Plugin Error: Invalide arguments for load: ('+str(sys.argv)+')' )
-					exit( 3 )
+					sys.exit( 3 )
 				else:
 					for i in range( len( warn_arr ) ):
 						if warn_arr[i] != '' and crit_arr[i] != '':
 							if float(warn_arr[i]) > float(crit_arr[i]):
 								print ( 'Plugin Error: Warning('+warn_arr[i]+') threshold should be less than critical('+crit_arr[i]+')' )
-								exit( 3 )
+								sys.exit( 3 )
 					check_procs( warn=warn_arr, crit=crit_arr )
 			else:
 				print ( 'Plugin Error: Invalide arguments for '+sys.argv[1]+': ('+str(sys.argv)+')' )
-				exit( 3 )
+				sys.exit( 3 )
 				
 		# load
 		elif sys.argv[1] == 'load':
@@ -798,17 +798,17 @@ if __name__ == '__main__':
 				crit_arr = sys.argv[3].split(',')
 				if len(warn_arr) > 3 or len(warn_arr) < 1 or len(warn_arr) != len(crit_arr):
 					print ( 'Plugin Error: Invalide arguments for load: ('+str(sys.argv)+')' )
-					exit( 3 )
+					sys.exit( 3 )
 				else:
 					for i in range( len( warn_arr ) ):
 						if warn_arr[i] != '' and crit_arr[i] != '':
 							if float(warn_arr[i]) > float(crit_arr[i]):
 								print ( 'Plugin Error: Warning('+warn_arr[i]+') threshold should be less than critical('+crit_arr[i]+')' )
-								exit( 3 )
+								sys.exit( 3 )
 					check_load( warn=warn_arr, crit=crit_arr )
 			else:
 				print ( 'Plugin Error: Invalide arguments for '+sys.argv[1]+': ('+str(sys.argv)+')' )
-				exit( 3 )
+				sys.exit( 3 )
 		# threads
 		elif sys.argv[1] == 'threads':
 			# no arg passed after procs
@@ -820,10 +820,10 @@ if __name__ == '__main__':
 					check_threads( warn=sys.argv[2], crit=sys.argv[3] )
 				else:
 					print ( 'Plugin Error: Warning('+sys.argv[2]+') threshold should be less than critical('+sys.argv[3]+')' )
-					exit( 3 )
+					sys.exit( 3 )
 			else:
 				print ( 'Plugin Error: Invalide arguments for '+sys.argv[1]+': ('+str(sys.argv)+')' )
-				exit( 3 )
+				sys.exit( 3 )
 				
 		# Open files
 		elif sys.argv[1] == 'files':
@@ -836,10 +836,10 @@ if __name__ == '__main__':
 					check_openfiles( warn=sys.argv[2], crit=sys.argv[3] )
 				else:
 					print ( 'Plugin Error: Warning('+sys.argv[2]+') threshold should be less than critical('+sys.argv[3]+')' )
-					exit( 3 )
+					sys.exit( 3 )
 			else:
 				print ( 'Plugin Error: Invalide arguments for '+sys.argv[1]+': ('+str(sys.argv)+')' )
-				exit( 3 )
+				sys.exit( 3 )
 		# diskio dev warn(read,write) crit(read,write)
 		elif sys.argv[1] == 'diskio':
 			# no arg passed after diskio [dev]
@@ -853,16 +853,16 @@ if __name__ == '__main__':
 				crit_arr = sys.argv[4].split(',')
 				if len(warn_arr) != 2 or len(warn_arr) != len(crit_arr):
 					print ( 'Plugin Error: Invalide arguments for ' + sys.argv[1] + ': ('+str(sys.argv)+')' )
-					exit( 3 )
+					sys.exit( 3 )
 				else:
 					for i in range( len( warn_arr ) ):
 						if float(warn_arr[i]) > float(crit_arr[i]):
 							print ( 'Plugin Error: Warning('+warn_arr[i]+') threshold should be less than critical('+crit_arr[i]+')' )
-							exit( 3 )
+							sys.exit( 3 )
 					check_diskio( sys.argv[2], warn=warn_arr, crit=crit_arr )
 			else:
 				print ( 'Plugin Error: Invalide arguments for '+sys.argv[1]+': ('+str(sys.argv)+')' )
-				exit( 3 )
+				sys.exit( 3 )
 		# disku mount warn crit
 		elif sys.argv[1] == 'disku':
 			# no arg passed after disku mount
@@ -874,10 +874,10 @@ if __name__ == '__main__':
 					check_disku( sys.argv[2] , warn=sys.argv[3], crit=sys.argv[4] )
 				else:
 					print ( 'Plugin Error: Warning('+sys.argv[2]+') threshold should be less than critical('+sys.argv[3]+')' )
-					exit( 3 )
+					sys.exit( 3 )
 			else:
 				print ( 'Plugin Error: Invalide arguments for '+sys.argv[1]+': ('+str(sys.argv)+')' )
-				exit( 3 )
+				sys.exit( 3 )
 		# memory warn crit
 		elif sys.argv[1] == 'memory':
 			# no arg passed after memory
@@ -889,10 +889,10 @@ if __name__ == '__main__':
 					check_memory( warn=sys.argv[2] , crit=sys.argv[3] )
 				else:
 					print ( 'Plugin Error: Warning('+sys.argv[2]+') threshold should be less than critical('+sys.argv[3]+')' )
-					exit( 3 )
+					sys.exit( 3 )
 			else:
 				print ( 'Plugin Error: Invalide arguments for '+sys.argv[1]+': ('+str(sys.argv)+')' )
-				exit( 3 )
+				sys.exit( 3 )
 		# swap warn crit
 		elif sys.argv[1] == 'swap':
 			# no arg passed after swap
@@ -904,10 +904,10 @@ if __name__ == '__main__':
 					check_swap( warn=sys.argv[2] , crit=sys.argv[3] )
 				else:
 					print ( 'Plugin Error: Warning('+sys.argv[2]+') threshold should be less than critical('+sys.argv[3]+')' )
-					exit( 3 )
+					sys.exit( 3 )
 			else:
 				print ( 'Plugin Error: Invalide arguments for '+sys.argv[1]+': ('+str(sys.argv)+')' )
-				exit( 3 )
+				sys.exit( 3 )
 	
 		# network iface warn(rx,tx)  crit(rx,tx)
 		elif sys.argv[1] == 'network':
@@ -922,17 +922,17 @@ if __name__ == '__main__':
 				crit_arr = sys.argv[4].split(',')
 				if len(warn_arr) != 2 or len(warn_arr) != len(crit_arr):
 					print ( 'Plugin Error: Invalide arguments for ' + sys.argv[1] + ': ('+str(sys.argv)+')' )
-					exit( 3 )
+					sys.exit( 3 )
 				else:
 					for i in range( len( warn_arr ) ):
 						if float(warn_arr[i]) > float(crit_arr[i]):
 							print ( 'Plugin Error: Warning('+warn_arr[i]+') threshold should be less than critical('+crit_arr[i]+')' )
-							exit( 3 )
+							sys.exit( 3 )
 					check_net( sys.argv[2], warn=warn_arr, crit=crit_arr )
 			else:
 				print ( 'Plugin Error: Invalide arguments for '+sys.argv[1]+': ('+str(sys.argv)+')' )
-				exit( 3 )
+				sys.exit( 3 )
 		else:
 			print ( 'What?' )
-			exit( 3 )
+			sys.exit( 3 )
 		
