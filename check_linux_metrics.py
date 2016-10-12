@@ -383,7 +383,7 @@ def check_diskio( dev, warn=None, crit=None ):
 	if dev.startswith( '/' ):
 		real_path = os.path.realpath( dev )
 		if str( real_path[:5] ) != '/dev/':
-			print ( 'Plugin Error: Block device not found: ' + real_path + '('+device+')' )
+			print ( 'Plugin Error: Block device not found: ' + dev )
 			sys.exit( 3 )
 		else:
 			device = real_path [5:]
