@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 # File: check_linux_metrics.py
 # URL: https://github.com/kxr/check_linux_metrics
@@ -25,6 +25,9 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
 import sys
 import time
 import os
@@ -118,7 +121,7 @@ def check_cpu( warn=None, crit=None ):
 	#update the interim file
 	shutil.copyfile( '/proc/stat', interim_file )
 
-	print status_outp + ' | ' + perfdata
+	print ( status_outp + ' | ' + perfdata )
 	sys.exit( status_code )
 
 def check_load( warn=None, crit=None ):
@@ -175,7 +178,7 @@ def check_load( warn=None, crit=None ):
 	#remove last space
 	perfdata = perfdata[:-1]
 
-	print status_outp + ' | ' + perfdata
+	print ( status_outp + ' | ' + perfdata )
 	sys.exit( status_code )
 
 def check_threads( warn=None, crit=None ):
@@ -219,7 +222,7 @@ def check_threads( warn=None, crit=None ):
 	#remove last space
 	perfdata = perfdata[:-1]
 
-	print status_outp + ' | ' + perfdata
+	print ( status_outp + ' | ' + perfdata )
 	sys.exit( status_code )
 
 def check_openfiles( warn=None, crit=None ):
@@ -266,7 +269,7 @@ def check_openfiles( warn=None, crit=None ):
 	#remove last space
 	perfdata = perfdata[:-1]
 
-	print status_outp + ' | ' + perfdata
+	print ( status_outp + ' | ' + perfdata )
 	sys.exit( status_code )
 
 
@@ -377,7 +380,7 @@ def check_procs( warn=None, crit=None ):
 	#update the interim file
 	shutil.copyfile( '/proc/stat', interim_file )
 
-	print status_outp + ' | ' + perfdata
+	print ( status_outp + ' | ' + perfdata )
 	sys.exit( status_code )
 
 def check_diskio( dev, warn=None, crit=None ):
@@ -484,7 +487,7 @@ def check_diskio( dev, warn=None, crit=None ):
 		#update the interim file
 		shutil.copyfile( '/proc/diskstats', interim_file )
 	
-		print status_outp + ' | ' + perfdata
+		print ( status_outp + ' | ' + perfdata )
 		sys.exit( status_code )
 
 def check_disku( mount, warn=None, crit=None):
@@ -532,7 +535,7 @@ def check_disku( mount, warn=None, crit=None):
 		if warn is not None and crit is not None:
 			perfdata += ';' + str(warn) + ';' + str(crit)
 	
-		print status_outp + ' | ' + perfdata
+		print ( status_outp + ' | ' + perfdata )
 		sys.exit( status_code )
 
 def check_memory ( warn=None, crit=None ):
@@ -595,7 +598,7 @@ def check_memory ( warn=None, crit=None ):
 	#remove last space
 	perfdata = perfdata[:-1]
 
-	print status_outp + ' | ' + perfdata
+	print ( status_outp + ' | ' + perfdata )
 	sys.exit( status_code )
 def check_swap ( warn=None, crit=None ):
 	status_code = 3
@@ -651,7 +654,7 @@ def check_swap ( warn=None, crit=None ):
 	#remove last space
 	perfdata = perfdata[:-1]
 
-	print status_outp + ' | ' + perfdata
+	print ( status_outp + ' | ' + perfdata )
 	sys.exit( status_code )
 
 def check_net ( interface, warn=None, crit=None ):
@@ -746,7 +749,7 @@ def check_net ( interface, warn=None, crit=None ):
 		#update the interim file
 		shutil.copyfile( '/proc/net/dev', interim_file )
 
-		print status_outp + ' | ' + perfdata
+		print ( status_outp + ' | ' + perfdata )
 		sys.exit( status_code )
 
 if __name__ == '__main__':
