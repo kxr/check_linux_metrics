@@ -57,6 +57,12 @@ def check_cpu( warn=None, crit=None ):
 		line1 = f1.readline()
 	finally:
 		f1.close()
+
+	if len(line1) == 0:
+		shutil.copyfile( '/proc/stat', interim_file )
+		print ( 'Something was wrong with the iterim_file, run again to get values' )
+		sys.exit( 0 )
+
 	#with open( '/proc/stat' ) as f2:
 	f2 = open( '/proc/stat', 'r' )
 	try:
